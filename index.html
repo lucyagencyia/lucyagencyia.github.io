@@ -1,11 +1,414 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <title>Lucy Agency</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lucy Agency — Plus de demandes locales (Plomberie)</title>
+  <meta name="description" content="Lucy Agency — Landing page premium pour plombiers : plus de demandes locales. Démo vidéo. Contact direct." />
+
+  <style>
+    :root{
+      --bg0:#070A10;
+      --bg1:#0B1020;
+      --card: rgba(255,255,255,.06);
+      --stroke: rgba(255,255,255,.10);
+      --text:#EEF2FF;
+      --muted: rgba(238,242,255,.70);
+      --muted2: rgba(238,242,255,.52);
+      --shadow: 0 20px 60px rgba(0,0,0,.45);
+      --r: 20px;
+      --max: 1120px;
+
+      --a:#66E3FF;
+      --b:#8B5CF6;
+      --c:#22C55E;
+
+      --g: linear-gradient(135deg, var(--a), var(--b));
+      --g2: linear-gradient(135deg, rgba(102,227,255,.18), rgba(139,92,246,.18));
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 700px at 15% 0%, rgba(102,227,255,.18) 0%, transparent 55%),
+        radial-gradient(900px 600px at 85% 20%, rgba(139,92,246,.18) 0%, transparent 55%),
+        radial-gradient(700px 500px at 50% 110%, rgba(34,197,94,.12) 0%, transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+    }
+
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:26px 18px 70px}
+
+    /* Subtle animated grid */
+    .gridbg{
+      position:fixed; inset:-40px; pointer-events:none; opacity:.25;
+      background-image:
+        linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(closest-side at 50% 20%, rgba(0,0,0,1), rgba(0,0,0,0));
+      animation: drift 14s linear infinite;
+    }
+    @keyframes drift { from{transform:translateY(0)} to{transform:translateY(56px)} }
+
+    /* Top bar */
+    .top{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:10px 0 18px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px; font-weight:750; letter-spacing:.2px
+    }
+    .logo{
+      width:34px; height:34px; border-radius:12px;
+      background: var(--g);
+      box-shadow: 0 12px 30px rgba(102,227,255,.12);
+      position:relative;
+      border:1px solid rgba(255,255,255,.18);
+    }
+    .logo:after{
+      content:"";
+      position:absolute; inset:8px;
+      border-radius:10px;
+      background: rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.12);
+    }
+    .nav{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+    }
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px;
+      border:1px solid var(--stroke);
+      border-radius:999px;
+      background: rgba(255,255,255,.04);
+      color:var(--muted);
+      font-size:13px;
+      backdrop-filter: blur(10px);
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.05);
+      font-weight:700;
+      box-shadow: 0 10px 28px rgba(0,0,0,.22);
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      cursor:pointer;
+    }
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.18)}
+    .btn.primary{
+      background: linear-gradient(180deg, rgba(102,227,255,.22), rgba(139,92,246,.14));
+      border-color: rgba(102,227,255,.35);
+    }
+    .btn.primary:hover{border-color: rgba(102,227,255,.55)}
+    .btn.ghost{background: transparent}
+
+    /* HERO */
+    .hero{
+      margin-top:8px;
+      border-radius: 26px;
+      border:1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(900px 380px at 15% 10%, rgba(102,227,255,.16) 0%, transparent 60%),
+        radial-gradient(800px 340px at 85% 30%, rgba(139,92,246,.16) 0%, transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .hero:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: linear-gradient(120deg, rgba(102,227,255,.18), rgba(139,92,246,.18), rgba(34,197,94,.10));
+      filter: blur(18px);
+      opacity:.55;
+      z-index:0;
+    }
+    .heroInner{
+      position:relative; z-index:1;
+      padding:28px 22px;
+      display:grid;
+      gap:18px;
+      grid-template-columns: 1fr;
+    }
+    @media(min-width:920px){
+      .heroInner{grid-template-columns: 1.05fr .95fr; padding:34px 30px}
+    }
+
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.20);
+      color: var(--muted);
+      font-size:13px;
+      width: fit-content;
+      backdrop-filter: blur(10px);
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px; background: var(--c);
+      box-shadow: 0 0 18px rgba(34,197,94,.55);
+    }
+    h1{
+      margin:12px 0 10px;
+      font-size: clamp(34px, 5vw, 56px);
+      line-height:1.02;
+      letter-spacing:-.6px;
+    }
+    .sub{
+      margin:0;
+      color: var(--muted);
+      font-size: clamp(15px, 2vw, 18px);
+      max-width: 56ch;
+    }
+    .heroCtas{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+    .micro{
+      color: var(--muted2);
+      font-size: 13px;
+      margin-top: 10px;
+    }
+
+    /* Stat strip */
+    .stats{
+      display:grid; gap:10px; grid-template-columns: 1fr;
+      margin-top: 18px;
+    }
+    @media(min-width:920px){ .stats{grid-template-columns: repeat(3, 1fr)} }
+    .stat{
+      border-radius: var(--r);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      padding:14px 14px;
+      backdrop-filter: blur(10px);
+    }
+    .stat .big{font-weight:800; font-size:18px}
+    .stat .small{color:var(--muted2); font-size:13px; margin-top:3px}
+
+    /* Video card */
+    .panel{
+      border-radius: 24px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .panelHead{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      padding:14px 16px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.18);
+    }
+    .panelTitle{font-weight:800; letter-spacing:.2px}
+    .panelNote{color:var(--muted2); font-size:13px}
+    .video{
+      position:relative;
+      aspect-ratio:16/9;
+      background: #05070c;
+    }
+    .video iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
+
+    /* Value props */
+    .row{
+      margin-top:16px;
+      display:grid; gap:12px;
+      grid-template-columns: 1fr;
+    }
+    @media(min-width:920px){ .row{grid-template-columns: 1fr 1fr} }
+    .card{
+      border-radius: 22px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      padding:16px;
+      box-shadow: 0 18px 50px rgba(0,0,0,.35);
+      position:relative;
+      overflow:hidden;
+    }
+    .card:before{
+      content:"";
+      position:absolute; inset:-1px;
+      background: linear-gradient(135deg, rgba(102,227,255,.12), rgba(139,92,246,.10));
+      opacity:.55;
+      filter: blur(18px);
+      z-index:0;
+    }
+    .card > *{position:relative; z-index:1}
+    .card h2{margin:0 0 8px; font-size:16px; letter-spacing:.2px}
+    .bullets{margin:0; padding:0; list-style:none; display:grid; gap:8px}
+    .bullets li{
+      display:flex; gap:10px; align-items:flex-start;
+      color: var(--muted);
+      font-size:14px;
+    }
+    .tick{
+      width:20px; height:20px; border-radius:10px;
+      background: rgba(34,197,94,.18);
+      border:1px solid rgba(34,197,94,.35);
+      display:grid; place-items:center;
+      flex:0 0 auto;
+      margin-top:1px;
+    }
+    .tick svg{width:12px; height:12px}
+
+    /* CTA footer */
+    .cta{
+      margin-top:16px;
+      border-radius: 26px;
+      border:1px solid rgba(102,227,255,.26);
+      background: linear-gradient(180deg, rgba(102,227,255,.10), rgba(139,92,246,.06));
+      box-shadow: var(--shadow);
+      padding:18px;
+      display:flex; flex-direction:column; gap:12px;
+    }
+    .ctaTop{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap
+    }
+    .ctaTitle{font-weight:900; font-size:18px; letter-spacing:.2px}
+    .ctaSub{color:var(--muted); font-size:14px; margin-top:4px; max-width: 62ch}
+    .ctaActions{display:flex; gap:10px; flex-wrap:wrap}
+    .foot{
+      margin-top:24px;
+      color: var(--muted2);
+      font-size: 13px;
+      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+    }
+
+    /* Reduce motion */
+    @media (prefers-reduced-motion: reduce){
+      .gridbg{animation:none}
+      .btn{transition:none}
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Lucy Agency</h1>
-  <p>Le site fonctionne.</p>
+  <div class="gridbg"></div>
+
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>Lucy Agency</div>
+      </div>
+      <div class="nav">
+        <span class="chip">Plombiers • Local • Simple</span>
+        <a class="btn ghost" href="#demo">Démo</a>
+        <a class="btn primary" href="#contact">Contact</a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="heroInner">
+        <div>
+          <div class="kicker"><span class="dot"></span> Acquisition locale, sans prise de tête</div>
+          <h1>Plus de demandes.<br/>Moins de vide.</h1>
+          <p class="sub">
+            Une présence locale qui transforme les recherches en appels.
+          </p>
+          <div class="heroCtas">
+            <a class="btn primary" href="#demo">Voir la démo</a>
+            <a class="btn" href="mailto:lucy.agency.info@gmail.com?subject=Demande%20d%27infos%20-%20Plomberie">Écrire à Lucy</a>
+          </div>
+          <div class="micro">Démo courte • Contact direct • Aucun engagement</div>
+
+          <div class="stats">
+            <div class="stat">
+              <div class="big">Local</div>
+              <div class="small">Visible quand ça compte</div>
+            </div>
+            <div class="stat">
+              <div class="big">Simple</div>
+              <div class="small">Pas de jargon, pas d’usine à gaz</div>
+            </div>
+            <div class="stat">
+              <div class="big">Action</div>
+              <div class="small">Recherche → appel / devis</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel" id="demo">
+          <div class="panelHead">
+            <div>
+              <div class="panelTitle">Démo (2 minutes)</div>
+              <div class="panelNote">Cas plomberie, concret</div>
+            </div>
+            <a class="btn" href="#contact">Parler</a>
+          </div>
+          <div class="video">
+            <iframe
+              src="https://www.youtube.com/embed/MQ3holU2dW0?rel=0"
+              title="Démo Lucy Agency"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="row">
+      <div class="card">
+        <h2>Ce que vous obtenez</h2>
+        <ul class="bullets">
+          <li><span class="tick" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span> Présence locale claire</li>
+          <li><span class="tick" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span> Contact immédiat</li>
+          <li><span class="tick" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span> Plus de demandes qualifiées</li>
+        </ul>
+      </div>
+
+      <div class="card" id="contact">
+        <h2>Contact</h2>
+        <ul class="bullets">
+          <li><span class="tick" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span> Email direct : <strong>lucy.agency.info@gmail.com</strong></li>
+          <li><span class="tick" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span> Réponse simple, sans forcing</li>
+        </ul>
+
+        <div class="ctaActions" style="margin-top:12px;">
+          <a class="btn primary" href="mailto:lucy.agency.info@gmail.com?subject=Demande%20d%27infos%20-%20Plomberie">Me contacter</a>
+          <a class="btn" href="#demo">Revoir la démo</a>
+        </div>
+      </div>
+    </div>
+
+    <section class="cta">
+      <div class="ctaTop">
+        <div>
+          <div class="ctaTitle">Une démo. Un échange. Point.</div>
+          <div class="ctaSub">Si le sujet vous parle, envoyez un email. Je vous réponds directement.</div>
+        </div>
+        <div class="ctaActions">
+          <a class="btn primary" href="mailto:lucy.agency.info@gmail.com?subject=Demande%20d%27infos%20-%20Plomberie">Écrire maintenant</a>
+          <a class="btn" href="#demo">Voir la démo</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="foot">
+      <div>© <span id="y"></span> Lucy Agency</div>
+      <div>Contact : <a href="mailto:lucy.agency.info@gmail.com">lucy.agency.info@gmail.com</a></div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
